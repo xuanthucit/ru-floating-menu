@@ -1,0 +1,262 @@
+/* --- Desktop Styles --- */
+.ru-floating-menu {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 99999;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    border-radius: 0 8px 8px 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    transition: width 0.3s ease;
+    width: auto;
+}
+
+/* Toggle Button */
+.ru-fm-toggle {
+    width: 20px;
+    height: 40px;
+    background: #eaeaea;
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 0 4px 4px 0;
+    color: #555;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.ru-fm-toggle:hover {
+    background: #ddd;
+    color: #333;
+}
+
+/* List & Items */
+.ru-floating-menu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.ru-floating-menu .ru-fm-item {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ru-floating-menu .ru-fm-item:last-child {
+    border-bottom: none;
+}
+
+.ru-floating-menu .ru-fm-item a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    font-weight: 500;
+    height: 50px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    width: auto;
+}
+
+.ru-floating-menu .ru-fm-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    /* Space between icon and text */
+    flex-shrink: 0;
+}
+
+.ru-floating-menu .ru-fm-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: contain;
+}
+
+/* Collapsed State */
+.ru-floating-menu.ru-fm-collapsed .ru-fm-label {
+    display: none;
+}
+
+.ru-floating-menu.ru-fm-collapsed .ru-fm-icon {
+    margin-right: 0;
+}
+
+.ru-floating-menu.ru-fm-collapsed .ru-fm-item a {
+    padding: 10px;
+}
+
+/* Hover Effects */
+.ru-floating-menu .ru-fm-item:hover {
+    background: #f9f9f9;
+}
+
+.ru-floating-menu .ru-fm-item:hover a {
+    color: #0056b3;
+}
+
+/* --- Mobile Styles --- */
+.ru-fm-mobile-wrapper {
+    display: none;
+    /* Hidden on desktop */
+}
+
+@media (max-width: 768px) {
+
+    /* Hide Desktop Menu */
+    .ru-floating-menu {
+        display: none !important;
+    }
+
+    /* Show Mobile Wrapper */
+    .ru-fm-mobile-wrapper {
+        display: block;
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 99999;
+    }
+
+    /* FAB Trigger */
+    .ru-fm-mobile-trigger {
+        width: 60px;
+        height: 60px;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        z-index: 100001;
+        /* Above backdrop */
+        animation: ru-pulse 2s infinite;
+    }
+
+    @keyframes ru-pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(0, 86, 179, 0.4);
+        }
+
+        70% {
+            box-shadow: 0 0 0 15px rgba(0, 86, 179, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(0, 86, 179, 0);
+        }
+    }
+
+    .ru-fm-rotating-icon img {
+        width: 30px;
+        height: 30px;
+        display: block;
+        object-fit: contain;
+    }
+
+    /* Backdrop */
+    .ru-fm-mobile-backdrop {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 100000;
+    }
+
+    /* Popup / Bottom Sheet */
+    .ru-fm-mobile-popup {
+        position: fixed;
+        bottom: -100%;
+        /* Hidden by default */
+        left: 0;
+        width: 100%;
+        background: #fff;
+        border-radius: 15px 15px 0 0;
+        z-index: 100002;
+        transition: bottom 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        padding-bottom: 20px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    /* Active State (Open) */
+    .ru-fm-mobile-wrapper.active .ru-fm-mobile-backdrop {
+        display: block;
+    }
+
+    .ru-fm-mobile-wrapper.active .ru-fm-mobile-popup {
+        bottom: 0;
+    }
+
+    /* Popup Header */
+    .ru-fm-popup-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        font-weight: bold;
+        color: #0056b3;
+        font-size: 16px;
+    }
+
+    .ru-fm-popup-close {
+        font-size: 24px;
+        cursor: pointer;
+        color: #999;
+        line-height: 1;
+    }
+
+    /* Popup List */
+    .ru-fm-popup-body ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .ru-fm-popup-body li {
+        border-bottom: 1px solid #f9f9f9;
+    }
+
+    .ru-fm-popup-body a {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        text-decoration: none;
+        color: #333;
+        font-size: 15px;
+    }
+
+    .ru-fm-popup-icon {
+        width: 32px;
+        height: 32px;
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ru-fm-popup-icon img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
